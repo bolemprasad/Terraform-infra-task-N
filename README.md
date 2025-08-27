@@ -1,35 +1,36 @@
-Terraform AWS Bastion + MongoDB + Redis
+# Terraform AWS Bastion + MongoDB + Redis
+
 This project provisions a Bastion Host (Windows) in a public subnet and two Ubuntu EC2 instances (MongoDB & Redis) in private subnets, using Terraform modules. The design ensures that private resources are only accessible through the bastion host.
-Architecture Overview
-Bastion Host (Windows)
+## Architecture Overview
+### Bastion Host (Windows)
 - Deployed in a public VPC/subnet
 - Accessible only from whitelisted office_cidrs
 - Protocols allowed: RDP (3389), SSH (22)
 - Serves as a secure jump box to reach private resources
-MongoDB (Ubuntu)
+### MongoDB (Ubuntu)
 - Runs in a private subnet
 - No public IP
 - Accepts traffic on 27017 only from the bastion
-Redis (Ubuntu)
+### Redis (Ubuntu)
 - Runs in a private subnet
 - No public IP
 - Accepts traffic on 6379 only from the bastion
-Security Groups
+#### Security Groups
 - Automatically created and linked per role
 - Bastion SG: Allows inbound RDP/SSH from office_cidrs
 - MongoDB SG: Allows 27017 only from Bastion
 - Redis SG: Allows 6379 only from Bastion
 Key Pair
 - Created from your local public key (.pub) placed in ./keys/
-Prerequisites
+# Prerequisites
 - Terraform >= 1.4
 - AWS CLI configured with credentials
 - Pre-existing VPCs & Subnets:
   * One public VPC/subnet (for bastion)
   * One private VPC/subnets (for MongoDB and Redis)
 - A valid SSH key pair (.pub file placed in ./keys/)
-Accessing the Instances
-Bastion (Windows)
+# Accessing the Instances
+## Bastion (Windows)
 1. Go to EC2 Console → select Bastion instance → Get Windows Password
 2. Upload your private key (my-keypair)
 3. Copy the decrypted Administrator password
